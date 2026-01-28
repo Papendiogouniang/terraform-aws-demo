@@ -1,30 +1,41 @@
-name: Terraform CI/CD
+name: "🚀 Terraform AWS CI/CD"
+
 
 on:
   push:
     paths:
       - '**/*.tf'
       - 'index.html'
+  repository_dispatch:
+    types: [web-form-trigger]
 
 jobs:
   terraform:
+    name: "🌍 Provision AWS avec Terraform"
     runs-on: ubuntu-latest
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
-      - uses: actions/checkout@v3
+      - name: 📥 Checkout du code
+        uses: actions/checkout@v3
 
-      - name: Setup Terraform
+      - name: 🛠️ Installation de Terraform
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.6.0
 
-      - name: Terraform Init
-        run: terraform init
+      - name: ⚡ Initialisation Terraform
+        run: |
+          echo "\033[1;34m==> Initialisation...\033[0m"
+          terraform init
 
-      - name: Terraform Plan
-        run: terraform plan
+      - name: 🔍 Plan Terraform
+        run: |
+          echo "\033[1;33m==> Planification...\033[0m"
+          terraform plan
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      - name: 🚀 Application Terraform
+        run: |
+          echo "\033[1;32m==> Application...\033[0m"
+          terraform apply -auto-approve
