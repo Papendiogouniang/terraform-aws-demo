@@ -1,0 +1,16 @@
+name: Déclenchement via formulaire
+
+on:
+  repository_dispatch:
+    types: [web-form-trigger]
+
+jobs:
+  print-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Afficher les données reçues
+        run: |
+          echo "Nom de l'instance: ${{ github.event.client_payload.instance_name }}"
+          echo "OS: ${{ github.event.client_payload.instance_os }}"
+          echo "Taille: ${{ github.event.client_payload.instance_size }}"
+          echo "Environnement: ${{ github.event.client_payload.instance_env }}"
